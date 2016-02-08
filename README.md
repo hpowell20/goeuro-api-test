@@ -2,7 +2,7 @@
 
 ## Overview
 
-This application is a command line utility intended to test the GoEuro Location JSON API.  The application runs on Java 8 and produces a CSV file using the data returned from the API.
+This application is a command line utility used to test the GoEuro Location JSON API.  The application runs on Java 8 and produces a CSV file using the data returned from the API.
 
 ## Configuring and Running the Project
 
