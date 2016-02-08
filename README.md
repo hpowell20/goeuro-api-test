@@ -10,6 +10,8 @@ This application is a command line utility used to test the GoEuro Location JSON
 - The project can be built by executing the command `./gradlew clean build`
 - Once built, the application can be run using the command java -jar GoEuroTest.jar "CITY_NAME" (where CITY_NAME is the city used as the input to the API)
 
+NOTE: The generated CSV file will be of the format "CITY_NAME".csv.
+
 ## Running Tests
 
 - Tests can be run You can run tests using gradle by executing `./gradlew cleanTest test`
