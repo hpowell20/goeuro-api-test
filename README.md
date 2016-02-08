@@ -1,15 +1,8 @@
 # goeuro-test
 
-## Purpose
+## Overview
 
-
-
-## What You Need
-
-To get started, you'll need 3 things:
-
-1. The Java JDK (development kit) version 1.8.
-2. The text editor or IDE of your choice.
+This application is a command line utility intended to test the GoEuro Location JSON API.  The application runs on Java 8 and produces a CSV file using the data returned from the API.
 
 ## Configuring and Running the Project
 
@@ -19,5 +12,6 @@ To get started, you'll need 3 things:
 
 ## Running Tests
 
-Tests can be run You can run tests using gradle by executing `./gradlew cleanTest test`. To generate a code coverage report, run `./gradlew jacocoTestReport`.
+- Tests can be run You can run tests using gradle by executing `./gradlew cleanTest test`
+- To generate a code coverage report, run `./gradlew jacocoTestReport`
 
