@@ -1,12 +1,24 @@
-*.class
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# Eclipse specific files
+.settings/
+.classpath
+.project
+bin/
+build/
+workspace/
 
-# Package Files #
-*.jar
-*.war
-*.ear
+# Utility output directory contents
+generated/
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+#Various temporary files created by editors
+*~
+
+# Temp log files
+logs/
+
+# Gradle specific files
+.gradle/
+
+# MAC Related Files
+.DS_Store
+
