@@ -7,8 +7,8 @@ bin/
 build/
 workspace/
 
-# Utility output directory contents
-generated/
+# Output CSV files
+*.csv
 
 #Various temporary files created by editors
 *~
