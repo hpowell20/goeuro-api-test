@@ -3,10 +3,10 @@ import ch.qos.logback.core.ConsoleAppender
 
 import static ch.qos.logback.classic.Level.DEBUG
 
-appender("STDOUT", ConsoleAppender) {
-  encoder(PatternLayoutEncoder) {
-	pattern = "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
-  }
+appender("CONSOLE", ConsoleAppender) {
+	encoder(PatternLayoutEncoder) {
+	  pattern = "%-5level %logger{36} - %msg%n"
+	}
 }
 
-root(DEBUG, ["STDOUT"])
+root(DEBUG, ["CONSOLE"])
