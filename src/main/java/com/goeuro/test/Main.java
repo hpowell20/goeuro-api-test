@@ -7,10 +7,7 @@ public class Main {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 	
-	private static ProcessRequest processRequest;
-	
 	private Main() {
-		processRequest = new ProcessRequest();
 	}
 	
 	public static void main(String[] args) {
@@ -19,6 +16,7 @@ public class Main {
 			return;
 		}
 		
+		ProcessRequest processRequest = new ProcessRequest();
 		processRequest.processGoEuroRequest(args[0]);
 	}
 }

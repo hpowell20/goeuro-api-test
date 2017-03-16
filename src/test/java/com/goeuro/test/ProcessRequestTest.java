@@ -1,8 +1,8 @@
 package com.goeuro.test;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyListOf;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
@@ -70,7 +70,7 @@ public class ProcessRequestTest {
 	public void testProcessGoEuroRequest_WhenIOExceptionIsThrown() throws HttpClientException, IOException {
 		// Setup the SUT
 		when(mockHttpClientHelper.getCityDetails(anyString())).thenReturn(JSON_RESPONSE);
-		when(mockCsvWriter.writeToCsvFile(anyString(), anyListOf(GeoPositionModel.class))).thenThrow(new IOException());
+		when(mockCsvWriter.writeToCsvFile(anyString(), anyList())).thenThrow(new IOException());
 
 		// Run the test
 		boolean expected = false;
@@ -79,14 +79,14 @@ public class ProcessRequestTest {
 		
 		// Verify mock interactions
 		verify(mockHttpClientHelper, times(1)).getCityDetails(anyString());
-		verify(mockCsvWriter, times(1)).writeToCsvFile(anyString(), anyListOf(GeoPositionModel.class));
+		verify(mockCsvWriter, times(1)).writeToCsvFile(anyString(), anyList());
 	}
 
 	@Test
 	public void testProcessGoEuroRequest_WhenNoExceptionsAreThrown() throws HttpClientException, IOException {
 		// Setup the SUT
 		when(mockHttpClientHelper.getCityDetails(anyString())).thenReturn(JSON_RESPONSE);
-		when(mockCsvWriter.writeToCsvFile(anyString(), anyListOf(GeoPositionModel.class))).thenReturn(true);
+		when(mockCsvWriter.writeToCsvFile(anyString(), anyList())).thenReturn(true);
 
 		// Run the test
 		boolean expected = true;
@@ -95,7 +95,7 @@ public class ProcessRequestTest {
 		
 		// Verify mock interactions
 		verify(mockHttpClientHelper, times(1)).getCityDetails(anyString());
-		verify(mockCsvWriter, times(1)).writeToCsvFile(anyString(), anyListOf(GeoPositionModel.class));
+		verify(mockCsvWriter, times(1)).writeToCsvFile(anyString(), anyList());
 	}
 	
 	@Test
