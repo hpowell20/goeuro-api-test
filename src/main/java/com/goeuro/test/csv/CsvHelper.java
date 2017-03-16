@@ -20,6 +20,10 @@ public class CsvHelper<T> {
 	}
 	
 	public boolean writeToCsvFile(String baseFileName, List<T> dataObjectsList) throws IOException {
+		if (baseFileName == null) {
+			throw new IllegalArgumentException("baseFileName");
+		}
+		
 		if (dataObjectsList != null && !dataObjectsList.isEmpty()) {
 			writeResults(setCsvFileName(baseFileName), 
 						 CSVFormat.DEFAULT.withHeader(dataConverter.getHeaders()), 
@@ -34,17 +38,16 @@ public class CsvHelper<T> {
 	// Helper Methods
 	private void writeResults(String csvFileName, CSVFormat csvFileFormat, List<T> dataObjectsList)
 			throws IOException {
-		
-		try (FileWriter fileWriter = new FileWriter(csvFileName)) {
-			try (CSVPrinter csvPrinter = new CSVPrinter(fileWriter, csvFileFormat)) {
+
+		try (FileWriter fileWriter = new FileWriter(csvFileName); 
+			 CSVPrinter csvPrinter = new CSVPrinter(fileWriter, csvFileFormat)) {
 				processRecords(dataObjectsList, csvPrinter);
 				LOGGER.info("CSV file created at " + csvFileName);
-			}
 		}
 	}
 	
 	protected String setCsvFileName(String baseFileName) {
-		return baseFileName + FILE_EXTENSION_CSV;
+		return baseFileName.concat(FILE_EXTENSION_CSV);
 	}
 	
 	private void processRecords(List<T> dataObjectsList, CSVPrinter csvPrinter) throws IOException {

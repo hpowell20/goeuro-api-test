@@ -17,17 +17,15 @@ public class CsvHelperTest {
 
 	private static final String UNIT_TEST_FILE_NAME = "unit-test";
 	
-	@Test
+	@Test(expected=IllegalArgumentException.class)
 	public void testWriteToCsvFile_WhenBaseFileNameListIsNull() throws IOException {
-		boolean expected = false;
-
+		// Setup  the SUT
 		final CsvHelper<TestModel> csvHelper = new CsvHelper<TestModel>(new TestDataConverter());
-		boolean actual = csvHelper.writeToCsvFile(null, Collections.emptyList());
-		assertEquals(expected, actual);
+		csvHelper.writeToCsvFile(null, createTestModelList());
 	}
-	
+
 	@Test
-	public void testWriteToCsvFile_WhenListIsNull() throws IOException {
+	public void testWriteToCsvFile_WhenDataObjectsListIsNull() throws IOException {
 		boolean expected = false;
 		
 		final CsvHelper<TestModel> csvHelper = new CsvHelper<TestModel>(new TestDataConverter());
@@ -58,8 +56,13 @@ public class CsvHelperTest {
 		// Clean up the output file
 		File file = new File(csvHelper.setCsvFileName(UNIT_TEST_FILE_NAME));
 		file.delete();	
+	}	
+
+	// Private Helper Methods
+	private List<TestModel> createTestModelList() {
+		return Arrays.asList(new TestModel(), new TestModel());
 	}
-		
+	
 	private GeoPositionModel createTestGeoPositionModel() {
 		return GeoPositionModel.builder()
 				.withId(RandomUtil.getRandomInt())
