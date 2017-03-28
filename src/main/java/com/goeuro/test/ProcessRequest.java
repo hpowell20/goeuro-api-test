@@ -40,7 +40,7 @@ public class ProcessRequest {
 		try {
 			// Using the HTTP helper, return a string of the results
 			String jsonResponse = httpClientHelper.getCityDetails(cityName);
-				
+			
 			// Populate the domain model with the results
 			JSONArray jsonArray = JsonUtil.getJsonArrayFromResponse(jsonResponse);
 			List<GeoPositionModel> geoPositionsList = processJsonResponse(cityName, jsonArray);

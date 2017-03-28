@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -17,7 +18,7 @@ import com.goeuro.test.exception.HttpClientException;
 import com.goeuro.test.utils.AppProperties;
 
 public class HttpClientHelper {
-
+	
 	protected static final String CONTENT_TYPE_JSON = "application/json";
 	
 	private CloseableHttpClient httpClient;
@@ -53,15 +54,25 @@ public class HttpClientHelper {
 		}
 		
 		try (CloseableHttpResponse response = httpClient.execute(request)) {
-			HttpEntity httpEntity = response.getEntity();
-			if (httpEntity == null) {
-				throw new HttpClientException("Response is null");
+			int statusCode = response.getStatusLine().getStatusCode();
+			if (statusCode != HttpStatus.SC_OK) {
+				throw new HttpClientException(String.format("Request from %s returned status code %d.  Please confirm the URL is still avauilable.",
+						request.getURI().toString(), statusCode));
 			}
 		
-			return EntityUtils.toString(httpEntity);
+			return getResponseEntityValue(response);
 		} catch (IOException e) {
 			throw new HttpClientException(e);
 		}
+	}
+	
+	private static String getResponseEntityValue(CloseableHttpResponse response) throws IOException {
+		HttpEntity httpEntity = response.getEntity();
+		if (httpEntity == null) {
+			throw new IOException("Response is null");
+		}
+	
+		return EntityUtils.toString(httpEntity);
 	}
 	
 	private static Header getApplicationJsonHeader() {

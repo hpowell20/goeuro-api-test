@@ -25,7 +25,7 @@ ext {
 	logbackVersion = '1.2.1'
 	slf4jApiVersion = '1.7.24'
 	groovyVersion = '2.4.9'
-	httpClientVersion = '4.5'
+	httpClientVersion = '4.5.3'
 	apacheCsvVersion = '1.4'
 	jsonVersion = '20160810'
 	guavaVersion = '21.0'

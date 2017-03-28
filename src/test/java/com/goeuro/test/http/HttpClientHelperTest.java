@@ -11,6 +11,8 @@ import java.io.IOException;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -43,9 +45,12 @@ public class HttpClientHelperTest {
 	public void testGetCityDetails_WhenResultFound() throws HttpClientException, IOException {
 		// Setup the SUT
 		CloseableHttpResponse mockResponse = mock(CloseableHttpResponse.class);
+		when(mockHttpClient.execute(any(HttpUriRequest.class))).thenReturn(mockResponse);
+		StatusLine mockStatusLine = mock(StatusLine.class);
+		when(mockResponse.getStatusLine()).thenReturn(mockStatusLine);
+		when(mockStatusLine.getStatusCode()).thenReturn(HttpStatus.SC_OK);
 		HttpEntity mockEntity = mock(HttpEntity.class);
 		when(mockResponse.getEntity()).thenReturn(mockEntity);
-		when(mockHttpClient.execute(any(HttpUriRequest.class))).thenReturn(mockResponse);
 		
 		httpClientHelper.getCityDetails(RandomUtil.getRandomString(20));
 		
@@ -72,11 +77,13 @@ public class HttpClientHelperTest {
 	}
 	
 	@Test(expected=HttpClientException.class)
-	public void testDoRequest_WhenReponseEntityIsNull() throws HttpClientException, IOException {
+	public void testDoRequest_WhenStatusCodeIsInvalid() throws HttpClientException, IOException {
 		// Setup the SUT
 		CloseableHttpResponse mockResponse = mock(CloseableHttpResponse.class);
-		when(mockResponse.getEntity()).thenReturn(null);
 		when(mockHttpClient.execute(any(HttpUriRequest.class))).thenReturn(mockResponse);
+		StatusLine mockStatusLine = mock(StatusLine.class);
+		when(mockResponse.getStatusLine()).thenReturn(mockStatusLine);
+		when(mockStatusLine.getStatusCode()).thenReturn(HttpStatus.SC_UNAUTHORIZED);
 		
 		// Run the test
 		HttpGet request = httpClientHelper.generateGetRequest(RandomUtil.getRandomUrl().toString());
@@ -84,7 +91,22 @@ public class HttpClientHelperTest {
 	}
 	
 	@Test(expected=HttpClientException.class)
-	public void testDoRequest_WhenIoExeptionIsThrown() throws HttpClientException, IOException {
+	public void testDoRequest_WhenReponseEntityIsNull() throws HttpClientException, IOException {
+		// Setup the SUT
+		CloseableHttpResponse mockResponse = mock(CloseableHttpResponse.class);
+		when(mockHttpClient.execute(any(HttpUriRequest.class))).thenReturn(mockResponse);
+		StatusLine mockStatusLine = mock(StatusLine.class);
+		when(mockResponse.getStatusLine()).thenReturn(mockStatusLine);
+		when(mockStatusLine.getStatusCode()).thenReturn(HttpStatus.SC_OK);
+		when(mockResponse.getEntity()).thenReturn(null);
+		
+		// Run the test
+		HttpGet request = httpClientHelper.generateGetRequest(RandomUtil.getRandomUrl().toString());
+		httpClientHelper.doRequest(request);
+	}
+	
+	@Test(expected=HttpClientException.class)
+	public void testDoRequest_WhenIoExceptionIsThrown() throws HttpClientException, IOException {
 		// Setup the SUT
 		when(mockHttpClient.execute(any(HttpUriRequest.class))).thenThrow(new IOException());
 		
