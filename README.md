@@ -14,5 +14,5 @@ NOTE: The generated CSV file will be of the format "CITY_NAME".csv.
 
 ## Running Tests
 
-- Tests can be run You can run tests using gradle by executing `./gradlew cleanTest test`
+- Tests can be executed by running the command `./gradlew cleanTest test`
 - To generate a code coverage report, run `./gradlew jacocoTestReport`
