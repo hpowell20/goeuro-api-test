@@ -56,7 +56,7 @@ public class HttpClientHelper {
 		try (CloseableHttpResponse response = httpClient.execute(request)) {
 			int statusCode = response.getStatusLine().getStatusCode();
 			if (statusCode != HttpStatus.SC_OK) {
-				throw new HttpClientException(String.format("Request from %s returned status code %d.  Please confirm the URL is still avauilable.",
+				throw new HttpClientException(String.format("Request from %s returned status code %d.  Please confirm the URL is still available.",
 						request.getURI().toString(), statusCode));
 			}
 		
